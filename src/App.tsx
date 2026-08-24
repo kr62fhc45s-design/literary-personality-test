@@ -47,12 +47,12 @@ type LiteraryPath = {
 };
 
 const traits: Record<Trait, { name: string; hint: string }> = {
-  imagination: { name: '想象', hint: '把现实推开一扇门' },
-  sensitivity: { name: '感受', hint: '听见细微的回声' },
-  rebellion: { name: '锋芒', hint: '不轻易接受现成答案' },
-  warmth: { name: '温度', hint: '向人与生活靠近' },
-  solitude: { name: '独处', hint: '在内部世界蓄力' },
-  order: { name: '秩序', hint: '为混沌建立结构' },
+  imagination: { name: '想象探索', hint: '发现新可能与新解释' },
+  sensitivity: { name: '感受觉察', hint: '捕捉情绪与细节变化' },
+  rebellion: { name: '独立判断', hint: '质疑规则并坚持立场' },
+  warmth: { name: '共情关怀', hint: '理解他人并主动连接' },
+  solitude: { name: '独处需求', hint: '通过独立空间恢复能量' },
+  order: { name: '计划执行', hint: '把目标变成稳定行动' },
 };
 
 const questions: Question[] = [
@@ -164,6 +164,42 @@ const questions: Question[] = [
     {title:'继续想办法工作',detail:'环境改变，承诺和节奏不必一起失效。',scores:{order:5,rebellion:3,solitude:3}},
     {title:'出门随便走走',detail:'没有导航和目的地，城市会变成另一座城市。',scores:{imagination:5,rebellion:4,order:1}}
   ]},
+  { scene:'计划 · 临时取消', text:'你期待了两周的见面，在出门前一小时被对方取消。', context:'对方只说“临时有事”，没有解释，也没有提出新的时间。', dimensions:['sensitivity','warmth','rebellion'], options:[
+    {title:'先问是否出了状况',detail:'确认对方是否需要帮助，再谈自己的失落。',scores:{warmth:5,sensitivity:4,rebellion:2}},
+    {title:'直接说明这让我不舒服',detail:'不指责，但需要对方知道临时取消的影响。',scores:{rebellion:5,sensitivity:4,warmth:3}},
+    {title:'不追问，自己安排晚上',detail:'把被打乱的时间收回来，不继续等待解释。',scores:{solitude:5,order:4,sensitivity:2}},
+    {title:'观察对方之后怎么做',detail:'一次理由不说明全部，后续行动更能说明重视程度。',scores:{order:5,sensitivity:5,warmth:2}}
+  ]},
+  { scene:'职场 · 成果汇报', text:'同事在汇报中把你提出的关键思路说成了团队共同结论。', context:'领导当场表示认可，会议只剩五分钟，你和这位同事还要长期合作。', dimensions:['rebellion','warmth','order'], options:[
+    {title:'当场补充自己的贡献',detail:'用事实说明思路的来源和你完成的部分。',scores:{rebellion:5,order:5,warmth:2}},
+    {title:'会后与同事确认边界',detail:'先保留会议节奏，再要求下一次明确署名。',scores:{warmth:4,order:5,rebellion:4}},
+    {title:'把过程整理成邮件',detail:'用文档同步项目记录，让事实留下可追溯证据。',scores:{order:5,solitude:4,rebellion:3}},
+    {title:'暂时不提',detail:'只要项目成功，个人归属并不是最重要的。',scores:{warmth:4,rebellion:1,order:2}}
+  ]},
+  { scene:'创作 · 截止前夜', text:'明早必须交付，但你对现在的版本完全不满意。', context:'继续重做可能更好，也可能错过截止时间；先交则会暴露明显的不完整。', dimensions:['imagination','order','sensitivity'], options:[
+    {title:'先交一个可用版本',detail:'标明不足与下一轮计划，让作品先进入真实反馈。',scores:{order:5,rebellion:4,sensitivity:2}},
+    {title:'推翻重来',detail:'如果核心不成立，按时交出也只是完成表面。',scores:{imagination:5,rebellion:5,order:1}},
+    {title:'只重做最关键的一页',detail:'找出影响判断的核心部分，把有限时间用在那里。',scores:{order:5,imagination:4,sensitivity:3}},
+    {title:'请一个人快速帮看',detail:'用外部视角判断，是作品有问题还是自己过度苛刻。',scores:{warmth:5,sensitivity:5,order:3}}
+  ]},
+  { scene:'街头 · 赶路途中', text:'你快要迟到时，一位陌生老人停下来问路。', context:'路线并不顺路，仅靠口头说明，对方看起来仍然很困惑。', dimensions:['warmth','order','sensitivity'], options:[
+    {title:'陪他走到能确认的位置',detail:'迟到可以解释，眼前的人此刻更需要帮助。',scores:{warmth:5,sensitivity:5,order:1}},
+    {title:'打开地图写清路线',detail:'提供足够明确的信息，然后继续赶路。',scores:{order:5,warmth:4,sensitivity:3}},
+    {title:'请附近店员接手',detail:'找到更合适的帮助者，不让两件事一起失控。',scores:{order:5,warmth:5,rebellion:3}},
+    {title:'简单指路后离开',detail:'守住自己已经答应他人的时间。',scores:{order:4,warmth:2,sensitivity:2}}
+  ]},
+  { scene:'网络 · 突然围攻', text:'你认同的一位创作者因一句有歧义的话遭到大规模指责。', context:'完整上下文尚未公开，转发与站队正在迅速增加。', dimensions:['rebellion','sensitivity','order'], options:[
+    {title:'先找原始内容',detail:'在证据完整前，不让情绪替自己完成判断。',scores:{order:5,sensitivity:4,rebellion:4}},
+    {title:'公开提醒大家别急着定罪',detail:'即使不替任何人辩护，也反对把复杂问题压成口号。',scores:{rebellion:5,warmth:4,order:3}},
+    {title:'暂时退出讨论',detail:'拒绝在高噪音环境里消耗判断和情绪。',scores:{solitude:5,sensitivity:4,rebellion:3}},
+    {title:'私下询问信任的人',detail:'先通过对话补足自己没看到的角度。',scores:{warmth:5,sensitivity:5,order:3}}
+  ]},
+  { scene:'未来 · 五年之后', text:'如果只能保证下面一种生活实现，你最愿意选择哪一种？', context:'四种生活都意味着放弃另一些可能，没有一种能同时满足所有期待。', dimensions:['imagination','solitude','warmth','order'], options:[
+    {title:'不断学习与创造新事物',detail:'收入和地点可以变化，但不能失去探索空间。',scores:{imagination:5,rebellion:4,order:2}},
+    {title:'和重要的人稳定生活',detail:'把时间给关系、社区与可以共同记住的日常。',scores:{warmth:5,sensitivity:4,order:3}},
+    {title:'拥有高度自主的个人空间',detail:'减少外界评价，按自己的节奏深度生活。',scores:{solitude:5,rebellion:4,imagination:4}},
+    {title:'建立可持续的事业与秩序',detail:'让能力、收入和责任形成长期可重复的系统。',scores:{order:5,rebellion:3,imagination:3}}
+  ]},
 ];
 
 const authors: Author[] = [
@@ -220,6 +256,96 @@ const literaryPaths: Record<string, LiteraryPath> = {
   '卡尔维诺': { book:'《看不见的城市》', figure:'马可·波罗', road:'你正在给一个沉重复杂的问题寻找轻盈结构。你有能力构造许多可能世界，但最终仍要从地图走回生活。', proof:'马可·波罗用一座座城市描述欲望、记忆、死亡和关系，每个模型都照见现实的一面。作品替你验证过：换一种结构能让困境重新可见，但模型的价值在于帮助选择，而不是替代进入。', answer:'先设计一个足够轻的实验，让想象接受现实反馈。好的框架不是完美解释世界，而是让你愿意开始。', route:['把问题画成三个可调整的变量','设计一个七天内能完成的小实验','依据真实反馈保留、修改或放弃框架'], readingNote:'每次只读一两座城市，并写下它对应你现实里的什么；让寓言成为工具，不只是收藏。' },
 };
 
+const traitOrder: Trait[] = ['imagination','sensitivity','rebellion','warmth','solitude','order'];
+
+const traitReports: Record<Trait, { high:string; mid:string; low:string; strength:string; risk:string; action:string; environment:string }> = {
+  imagination: {
+    high:'你习惯从多个角度理解问题，也愿意尝试尚未被证明的新方法。',
+    mid:'你能接受新想法，但通常希望它能与现实需要连接。',
+    low:'你更相信清楚、具体和经过验证的方案，不容易被概念带走。',
+    strength:'能发现替代方案，把旧问题重新定义。', risk:'可能同时打开太多可能，导致迟迟不收束。',
+    action:'选一个真实问题，限定七天做出最小可用版本。', environment:'允许试验、创造内容或重新设计方法的工作。'
+  },
+  sensitivity: {
+    high:'你能迅速察觉语气、气氛与细节变化，情境对你的影响较深。',
+    mid:'你通常能读懂他人情绪，也能在需要时把注意力拉回事实。',
+    low:'你较少被细微情绪牵动，更偏向根据明确事实作判断。',
+    strength:'能提前发现关系、用户体验或作品中的细微问题。', risk:'容易把外界信号全部接进来，造成反复内耗。',
+    action:'每天记录一次“事实—我的解释—我的感受”，把三者分开。', environment:'重视洞察、审美、用户体验和深度理解的工作。'
+  },
+  rebellion: {
+    high:'你不会因为“大家都这样”就停止判断，遇到不合理规则会主动质疑。',
+    mid:'你愿意配合有效规则，也会在关键边界上表达不同意见。',
+    low:'你重视共识与稳定，更愿意先理解现有规则为何存在。',
+    strength:'能在群体惯性中保持独立，推动必要的改变。', risk:'若表达过早或过硬，正确观点也可能失去支持。',
+    action:'提出异议时同时给出证据、影响和一个可执行替代方案。', environment:'允许讨论、改进规则并尊重专业判断的组织。'
+  },
+  warmth: {
+    high:'你会把人的处境纳入决定，关系质量对你的投入感影响明显。',
+    mid:'你愿意照顾他人，也能在必要时把任务和边界放在前面。',
+    low:'你更习惯以独立、直接和解决问题的方式表达关心。',
+    strength:'容易建立信任，并把个人差异转化为合作。', risk:'可能为维持关系承担过多，较晚表达自己的需要。',
+    action:'本周明确说出一个需要，并对一件超出边界的请求给出替代方案。', environment:'有稳定合作、真实反馈和共同目标的团队。'
+  },
+  solitude: {
+    high:'你需要较完整的独处时间整理信息、恢复能量并形成判断。',
+    mid:'你能在社交与独处之间切换，关键是节奏是否由自己掌控。',
+    low:'你更容易从互动、讨论和共同推进中获得能量。',
+    strength:'适合深度工作，能形成不依赖即时认同的观点。', risk:'压力大时可能用独处替代沟通，让问题在内部放大。',
+    action:'固定两段无打扰时间，同时约定一个必须对外反馈的节点。', environment:'允许深度工作、减少无效会议并尊重个人节奏的环境。'
+  },
+  order: {
+    high:'你会自然地拆分任务、评估风险并追踪承诺是否兑现。',
+    mid:'你能建立基本计划，也愿意根据现场变化调整路线。',
+    low:'你更依赖兴趣和情境启动，固定流程过多会削弱你的活力。',
+    strength:'能把想法转成进度，让复杂任务持续向前。', risk:'可能为了可控而过度准备，错过试错和变化窗口。',
+    action:'为当前目标只保留三个里程碑，每周根据反馈更新一次。', environment:'目标清晰、权责明确，同时允许优化方法的工作。'
+  }
+};
+
+function scoreLevel(score: number) {
+  if (score >= 3.8) return '明显倾向';
+  if (score >= 2.8) return '平衡区间';
+  return '较低倾向';
+}
+
+function scoreDescription(trait: Trait, score: number) {
+  const report = traitReports[trait];
+  return score >= 3.8 ? report.high : score >= 2.8 ? report.mid : report.low;
+}
+
+function RadarChart({ scores }: { scores: Scores }) {
+  const size = 460;
+  const center = size / 2;
+  const radius = 142;
+  const point = (index:number, scale:number) => {
+    const angle = -Math.PI / 2 + index * Math.PI / 3;
+    return [center + Math.cos(angle) * radius * scale, center + Math.sin(angle) * radius * scale];
+  };
+  const polygon = (scale:number) => traitOrder.map((_,index)=>point(index,scale).join(',')).join(' ');
+  const data = traitOrder.map((trait,index)=>point(index,scores[trait]/5).join(',')).join(' ');
+
+  return (
+    <figure className="radar-figure">
+      <svg viewBox={`0 0 ${size} ${size}`} role="img" aria-labelledby="radar-title radar-desc">
+        <title id="radar-title">六项精神维度雷达图</title>
+        <desc id="radar-desc">用六边形雷达图展示想象探索、感受觉察、独立判断、共情关怀、独处需求与计划执行的相对水平。</desc>
+        {[.2,.4,.6,.8,1].map(level=><polygon className="radar-grid" points={polygon(level)} key={level}/>) }
+        {traitOrder.map((trait,index)=>{
+          const [x,y] = point(index,1);
+          return <line className="radar-axis" x1={center} y1={center} x2={x} y2={y} key={trait}/>;
+        })}
+        <polygon className="radar-data" points={data}/>
+        {traitOrder.map((trait,index)=>{
+          const [x,y] = point(index,1.22);
+          const anchor = x < center - 10 ? 'end' : x > center + 10 ? 'start' : 'middle';
+          return <g key={trait}><text className="radar-label" x={x} y={y} textAnchor={anchor}>{traits[trait].name}</text><text className="radar-score" x={x} y={y+18} textAnchor={anchor}>{Math.round(scores[trait]*20)}</text></g>;
+        })}
+      </svg>
+    </figure>
+  );
+}
+
 function calculateScores(answers: number[]): Scores {
   const totals: Record<Trait, number[]> = { imagination:[], sensitivity:[], rebellion:[], warmth:[], solitude:[], order:[] };
   questions.forEach((question, index) => {
@@ -247,6 +373,11 @@ export default function Home() {
   const path = literaryPaths[result.name];
   const resonance = (author: Author) => Math.max(72, Math.round(100 - distance(scores,author) / 96 * 100));
   const answered = answers.filter(Boolean).length;
+  const rankedTraits = [...traitOrder].sort((a,b)=>scores[b]-scores[a]);
+  const strongest = rankedTraits[0];
+  const second = rankedTraits[1];
+  const growth = rankedTraits[rankedTraits.length-1];
+  const practicalSummary = `你最稳定的倾向是「${traits[strongest].name}」与「${traits[second].name}」。这意味着你通常会先${traits[strongest].hint}，同时通过${traits[second].hint}来完成判断。你的发展重点不是改变人格，而是让优势在真实任务中更可控、更可持续。`;
 
   function choose(value: number) {
     const next = [...answers];
@@ -282,9 +413,9 @@ export default function Home() {
       {stage === 'intro' && (
         <section className="landing" aria-labelledby="main-title">
           <div className="landing-copy">
-            <div className="issue-line"><span>LITERARY PERSONALITY TEST</span><i /><span>18 个场景 · 24 种作家人格</span></div>
+            <div className="issue-line"><span>LITERARY PERSONALITY TEST</span><i /><span>24 个场景 · 24 种作家人格</span></div>
             <h1 id="main-title"><small>你的私人文学档案</small><em>你走的这条路，</em><strong>书里已经有人替你走过。</strong></h1>
-            <p className="intro-text">18 个多场景选择，不问你“像不像”，只看你会怎么做。我们从六种精神维度，为你找到一位文字同行人，以及一本已经替你验证过这段人生的书。</p>
+            <p className="intro-text">24 个具体场景，不问你“像不像”，只看你会怎么做。我们从六项精神维度，为你找到一位文字同行人，以及一本已经替你验证过相似选择的书。</p>
             <p className="promise-note"><span>你会得到</span><strong>一种人格底色 · 一本命运之书 · 三步现实路径</strong>不是把你归类，而是从文学里借回一段已经被走过的经验。</p>
             <div className="intro-actions"><button className="ink-button" onClick={() => setStage('quiz')}>打开测试档案 <span>↗</span></button><p>约 5 分钟<br />无需登录</p></div>
           </div>
@@ -300,7 +431,10 @@ export default function Home() {
             <div className="red-thread" /><div className="stamp">私人<br/>阅读</div>
           </div>
 
-          <div className="author-marquee"><span>鲁迅</span><span>张爱玲</span><span>伍尔夫</span><span>卡夫卡</span><span>三毛</span><span>博尔赫斯</span><span>奥斯汀</span><span>马尔克斯</span><span>＋16</span></div>
+          <div className="author-shelf" aria-label="部分作家人格原型">
+            <header><div><b>24 种作家人格原型</b><small>每一种，都有独特的命运与选择。</small></div><span>查看全部 →</span></header>
+            <div>{authors.slice(0,6).map((author,index)=><article key={author.name}><i>{String(index+1).padStart(2,'0')}</i><span className={`mini-collage c${index+1}`} /><b>{author.archetype.replace(/的/g,'').slice(0,4)}</b><small>{author.name}</small></article>)}</div>
+          </div>
         </section>
       )}
 
@@ -328,64 +462,72 @@ export default function Home() {
       {stage === 'result' && (
         <section className="result-shell" style={{'--accent':result.colors[1],'--deep':result.colors[0],'--paper2':result.colors[2]} as React.CSSProperties}>
           <div className="result-heading">
-            <p>PERSONAL LITERARY PORTRAIT · 01</p>
-            <span>基于作品气质的文学隐喻，并非对作家本人或你的心理诊断</span>
+            <p>人格底色 · PERSONAL REPORT</p>
+            <span>NO. 2026—{String(Math.floor(resonance(result)*17)).padStart(4,'0')}</span>
           </div>
-          <div className="portrait-grid">
-            <div className="author-plate">
-              <div className="plate-top"><span>{result.place}</span><span>{result.years}</span></div>
-              <div className="author-mark">{result.mark}</div>
-              <p>{result.en}</p>
-              <div className="plate-colors">{result.colors.map(color=><i key={color} style={{background:color}} />)}</div>
+          <div className="report-hero">
+            <aside className="type-rail">
+              <p>你的作家人格</p>
+              <h1>{result.archetype}</h1>
+              <em>{result.en}</em>
+              <div className="type-name">{result.name}<small>型</small></div>
+              <dl><div><dt>人格共鸣</dt><dd>{resonance(result)}%</dd></div><div><dt>主要优势</dt><dd>{traits[strongest].name}</dd></div><div><dt>成长重点</dt><dd>{traits[growth].name}</dd></div></dl>
+            </aside>
+            <div className="book-stage" aria-label={`推荐书目 ${path.book}`}>
+              <div className="book-cover"><small>{result.en}</small><strong>{path.book.replace(/[《》]/g,'')}</strong><span>{result.mark}</span><i>PERSONAL EDITION · 024</i></div>
             </div>
-            <div className="result-title">
-              <p>你的文学人格底色接近</p>
-              <h1>{result.name}<small>型</small></h1>
-              <h2>「{result.archetype}」</h2>
-              <div className="resonance"><span>共鸣度</span><strong>{resonance(result)}%</strong><i><b style={{width:`${resonance(result)}%`}}/></i></div>
-              <p className="result-lead">{result.summary}</p>
+            <div className="report-intro">
+              <p>你的结果总结</p>
+              <h2>{traits[strongest].name}<br/>× {traits[second].name}</h2>
+              <div className="red-rule" />
+              <p className="plain-summary">{practicalSummary}</p>
+              <blockquote>{result.summary}</blockquote>
             </div>
           </div>
 
-          <section className="literary-proof" aria-labelledby="proof-title">
-            <header className="proof-header">
-              <div><p>THE BOOK HAS BEEN THERE · 书中来信</p><h2 id="proof-title">你走的这条路，<br/><em>有人已经替你走过。</em></h2></div>
-              <div className="book-seal"><span>建议阅读</span><strong>{path.book}</strong><small>{path.figure}</small></div>
-            </header>
-            <div className="proof-grid">
-              <article className="proof-road"><span>01 / 你此刻的路</span><h3>你真正面对的，并不只是眼前这件事</h3><p>{path.road}</p></article>
-              <article className="proof-story"><span>02 / 书中验证</span><h3>{path.figure}<small>已经在 {path.book} 里走到这里</small></h3><p>{path.proof}</p></article>
-              <article className="proof-answer"><span>03 / 带回现实的答案</span><h3>这本书没有替你决定，<br/>但它替你排除了一条弯路</h3><p>{path.answer}</p></article>
+          <section className="dimension-report" aria-labelledby="dimension-title">
+            <header className="section-head"><div><span>01 / SIX DIMENSIONS</span><h2 id="dimension-title">六项精神维度</h2></div><p>分数表示你在本次 24 个场景中的相对倾向，不代表能力高低。高低两端都有优势与代价。</p></header>
+            <div className="dimension-layout">
+              <RadarChart scores={scores}/>
+              <div className="dimension-list">{traitOrder.map((trait,index)=><article key={trait}><b>0{index+1}</b><div><h3>{traits[trait].name}<small>{scoreLevel(scores[trait])}</small></h3><p>{scoreDescription(trait,scores[trait])}</p></div><strong>{Math.round(scores[trait]*20)}</strong></article>)}</div>
             </div>
-            <div className="route-card">
-              <div className="route-intro"><span>YOUR NEXT THREE PAGES</span><h3>接下来三步，<br/>把文学变成行动。</h3></div>
-              <ol>{path.route.map((step,index)=><li key={step}><span>0{index+1}</span><p>{step}</p></li>)}</ol>
-            </div>
-            <aside className="reading-margin"><span>阅读提示</span><p>{path.readingNote}</p></aside>
           </section>
 
-          <div className="essay-grid">
-            <article className="essay essay-wide"><span>01 / 内在叙事</span><h3>你如何理解自己</h3><p>{result.inner}</p></article>
-            <article className="essay"><span>02 / 关系语言</span><h3>你如何靠近他人</h3><p>{result.relation}</p></article>
-            <article className="essay dark"><span>03 / 天赋</span><h3>你带来的独特价值</h3><p>{result.gift}</p></article>
-            <article className="essay accent"><span>04 / 阴影页</span><h3>需要留意的盲点</h3><p>{result.shadow}</p></article>
-            <article className="essay"><span>05 / 今日练习</span><h3>给你的一个小行动</h3><p>{result.practice}</p></article>
-          </div>
+          <section className="insight-grid" aria-labelledby="insight-title">
+            <header className="section-head"><div><span>02 / PRACTICAL PROFILE</span><h2 id="insight-title">这份结果对你意味着什么</h2></div></header>
+            <article className="insight-card"><span>优势 01</span><h3>{traits[strongest].name}</h3><p>{traitReports[strongest].strength}</p><small>{result.gift}</small></article>
+            <article className="insight-card"><span>优势 02</span><h3>{traits[second].name}</h3><p>{traitReports[second].strength}</p><small>{result.inner}</small></article>
+            <article className="insight-card dark"><span>需要留意</span><h3>优势过度使用时</h3><p>{traitReports[strongest].risk}</p><small>{result.shadow}</small></article>
+            <article className="insight-card accent"><span>发展方向</span><h3>补足 {traits[growth].name}</h3><p>{traitReports[growth].action}</p><small>较低分不等于缺点，它提示你可能更少自然调用这类行为。</small></article>
+          </section>
 
-          <div className="spectrum-section">
-            <div><p className="section-kicker">SIX INNER TEXTURES</p><h2>你的六种精神刻度</h2></div>
-            <div className="spectrum-list">{(Object.keys(traits) as Trait[]).map(trait=><div className="spectrum-row" key={trait}><span>{traits[trait].name}<small>{traits[trait].hint}</small></span><i><b style={{width:`${scores[trait]*20}%`}}/></i><strong>{Math.round(scores[trait]*20)}</strong></div>)}</div>
-          </div>
+          <section className="fit-section">
+            <div><span>03 / ENVIRONMENT FIT</span><h2>你更容易发挥的环境</h2><p>环境不是职业名称，而是你能否持续发挥的条件。</p></div>
+            <ol>{rankedTraits.slice(0,3).map((trait,index)=><li key={trait}><b>0{index+1}</b><p>{traitReports[trait].environment}</p></li>)}</ol>
+          </section>
 
-          <div className="echoes">
-            <div className="echo-copy"><p>你的另外两种回声</p><h2>人格从来不是<br/>一个单独的名字。</h2><span>先从 {path.book} 开始。你不是为了寻找标准答案，而是去看一个人怎样承担相似选择的后果。</span></div>
-            <div className="echo-cards">{matches.slice(1).map((author,index)=><article key={author.name}><span>0{index+2}</span><div><small>{author.en}</small><h3>{author.name}</h3><p>{author.archetype}</p></div><strong>{resonance(author)}%</strong></article>)}</div>
-          </div>
+          <section className="book-evidence" aria-labelledby="book-title">
+            <header><div><span>04 / THE BOOK HAS BEEN THERE</span><h2 id="book-title">你走的这条路，<br/>这本书里有人验证过。</h2></div><div className="book-ticket"><small>建议阅读</small><b>{path.book}</b><span>{path.figure}</span></div></header>
+            <div><article><b>你正在处理的问题</b><p>{path.road}</p></article><article className="dark"><b>书中人物付过的代价</b><p>{path.proof}</p></article><article className="accent"><b>可以带回现实的结论</b><p>{path.answer}</p></article></div>
+            <aside><b>阅读时重点看：</b><p>{path.readingNote}</p></aside>
+          </section>
 
-          <div className="result-actions"><button className="ink-button" onClick={shareResult}>{copied?'结果已复制':'分享这页人格档案'} <span>↗</span></button><button className="restart" onClick={restart}>重新翻阅自己</button></div>
-          <p className="legal">本测试用于自我探索与文化娱乐。文学家原型来自其作品呈现的气质联想，不代表对作家本人性格的事实判断。</p>
+          <section className="growth-plan" aria-labelledby="growth-title">
+            <header className="section-head"><div><span>05 / 90-DAY DIRECTION</span><h2 id="growth-title">未来三个月发展方向</h2></div><p>一次只练习一种新行为，用真实反馈代替对自己的抽象评价。</p></header>
+            <ol>
+              <li><span>01</span><div><b>第 1—30 天 · 看见模式</b><p>{path.route[0]}。每周记录一次发生的场景、你的第一反应和实际结果。</p></div></li>
+              <li><span>02</span><div><b>第 31—60 天 · 使用优势</b><p>{traitReports[strongest].action} 完成后只复盘方法，不用一次结果评价整个人。</p></div></li>
+              <li><span>03</span><div><b>第 61—90 天 · 补足短板</b><p>{traitReports[growth].action} 连续实践四周，并请一位可信任的人提供一次具体反馈。</p></div></li>
+            </ol>
+          </section>
+
+          <div className="echoes"><div><span>另外两种相近底色</span><p>你的结果不是单一标签，也会与这些作家原型产生部分共鸣。</p></div><div className="echo-cards">{matches.slice(1).map((author,index)=><article key={author.name}><span>0{index+2}</span><div><small>{author.en}</small><h3>{author.name}</h3><p>{author.archetype}</p></div><strong>{resonance(author)}%</strong></article>)}</div></div>
+
+          <div className="result-actions"><button className="ink-button" onClick={shareResult}>{copied?'结果已复制':'分享这份结果'} <span>↗</span></button><button className="restart" onClick={restart}>重新测试</button></div>
+          <p className="legal">本测试用于自我探索与文化娱乐，不是临床或标准化心理测评。六项分数来自本次场景选择的相对倾向；文学家原型基于作品气质的文化联想，不代表对作家本人性格的事实判断。</p>
         </section>
       )}
     </main>
   );
 }
+
