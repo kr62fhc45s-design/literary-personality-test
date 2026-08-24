@@ -4,12 +4,18 @@ type Trait = 'imagination' | 'sensitivity' | 'rebellion' | 'warmth' | 'solitude'
 type Stage = 'intro' | 'quiz' | 'result';
 type Scores = Record<Trait, number>;
 
+type ScenarioOption = {
+  title: string;
+  detail: string;
+  scores: Partial<Scores>;
+};
+
 type Question = {
   scene: string;
   text: string;
-  trait: Trait;
-  low: string;
-  high: string;
+  context: string;
+  dimensions: Trait[];
+  options: [ScenarioOption, ScenarioOption, ScenarioOption, ScenarioOption];
 };
 
 type Author = {
@@ -50,24 +56,114 @@ const traits: Record<Trait, { name: string; hint: string }> = {
 };
 
 const questions: Question[] = [
-  { scene: '旧物 · 周日下午', text: '整理抽屉时，你翻到一张十年前的电影票。', trait: 'sensitivity', low: '确认没用，随手丢掉', high: '停下来，重新走进那一天' },
-  { scene: '通勤 · 清晨 8:20', text: '熟悉的路口突然封路，你必须绕进一条从没走过的小巷。', trait: 'imagination', low: '只想尽快回到原路线', high: '开始猜想巷子里的故事' },
-  { scene: '会议 · 周一上午', text: '所有人都在赞成一个方案，但你看见了一个关键漏洞。', trait: 'rebellion', low: '先保留，避免扫兴', high: '会清楚地当场指出' },
-  { scene: '消息 · 深夜 00:47', text: '朋友只发来一句“没事，我睡了”，语气却和平时不同。', trait: 'warmth', low: '尊重对方，不再追问', high: '会再陪一会儿，确认状态' },
-  { scene: '周末 · 空白的一天', text: '难得没有任何安排，也没有人约你。', trait: 'solitude', low: '很快想找人或活动填满', high: '独处反而让我恢复能量' },
-  { scene: '旅行 · 出发前夜', text: '明天要去一座陌生城市，你会如何准备？', trait: 'order', low: '到达以后再随机决定', high: '路线、时间和备选都列好' },
-  { scene: '雨天 · 咖啡馆', text: '邻桌两个人沉默地坐了很久，其中一人忽然把伞留下离开。', trait: 'imagination', low: '只是普通一幕，不会多想', high: '脑中已经出现几种前因后果' },
-  { scene: '聚餐 · 六个人', text: '席间有人讲了一个刻薄的玩笑，大家都笑了。', trait: 'rebellion', low: '不破坏气氛，保持沉默', high: '会让对方知道这并不好笑' },
-  { scene: '房间 · 凌晨两点', text: '一段很久以前的对话突然重新浮现在脑中。', trait: 'sensitivity', low: '很快把它按下去睡觉', high: '会反复体会当时没说出口的话' },
-  { scene: '协作 · 截止日前', text: '团队文件命名混乱、版本四散，但内容仍在推进。', trait: 'order', low: '能找到就行，先继续做', high: '会先建立一套清晰规则' },
-  { scene: '傍晚 · 独自散步', text: '手机只剩 5% 的电，而你还要走四十分钟。', trait: 'solitude', low: '担心失联，尽量省电联系别人', high: '正好关机，享受无人抵达的时间' },
-  { scene: '争执 · 熟悉的人', text: '对方说了重话，半小时后带着你喜欢的食物回来。', trait: 'warmth', low: '问题没说清楚，食物没有意义', high: '能读懂这份笨拙的和解' },
-  { scene: '书店 · 偶然翻页', text: '你读到一句无法完全理解、却很美的话。', trait: 'imagination', low: '需要弄懂作者到底在说什么', high: '愿意让它保持模糊和神秘' },
-  { scene: '规则 · 日常流程', text: '一个沿用多年的规定明显低效，但没人愿意改。', trait: 'rebellion', low: '先按规定做，减少麻烦', high: '会尝试越过它并证明新办法' },
-  { scene: '告别 · 车站月台', text: '列车开走后，你通常会怎么做？', trait: 'sensitivity', low: '马上转身，开始下一件事', high: '站一会儿，让告别真正结束' },
-  { scene: '家中 · 临时来客', text: '朋友说十分钟后到，而你的房间还很乱。', trait: 'order', low: '真实一点也没关系', high: '会迅速让空间恢复体面' },
-  { scene: '选择 · 两张邀请函', text: '一边是热闹的行业聚会，一边是独自看期待已久的电影。', trait: 'solitude', low: '更怕错过人与机会', high: '更想守住只属于自己的晚上' },
-  { scene: '街角 · 小小意外', text: '陌生人的纸袋破了，橙子滚了一地，而你正要迟到。', trait: 'warmth', low: '示意一下，继续赶路', high: '会停下来帮忙捡完' },
+  { scene:'职业 · 周五 18:40', text:'你收到一份薪水更低、却更接近理想的工作邀请。', context:'回复截止只剩三天，而现在的生活稳定、熟悉，也越来越没有感觉。', dimensions:['rebellion','order','imagination'], options:[
+    {title:'先不急着辞职',detail:'把新方向拆成一个三个月的业余实验。',scores:{order:5,rebellion:3,imagination:4}},
+    {title:'接受邀请',detail:'有些路必须进入以后，才知道自己是谁。',scores:{rebellion:5,imagination:5,order:2}},
+    {title:'留下来谈条件',detail:'先争取改变现岗位的内容和边界。',scores:{rebellion:4,order:4,warmth:3}},
+    {title:'礼貌拒绝',detail:'当下的安全与责任，比理想试验更重要。',scores:{order:5,imagination:2,rebellion:1}}
+  ]},
+  { scene:'消息 · 深夜 00:47', text:'朋友只发来一句“没事，我睡了”，语气却和平时不同。', context:'你明早有重要安排，而对方已经连续几天说自己很忙。', dimensions:['warmth','sensitivity','order'], options:[
+    {title:'直接打电话',detail:'宁愿被嫌烦，也要确认此刻是否安全。',scores:{warmth:5,sensitivity:5,order:2}},
+    {title:'留一条不催促的消息',detail:'告诉对方你在，醒来后随时可以找你。',scores:{warmth:5,sensitivity:4,order:4}},
+    {title:'尊重“没事”',detail:'相信成年人会为自己的表达负责。',scores:{warmth:2,sensitivity:2,order:5}},
+    {title:'先观察细节',detail:'翻看近几次聊天，判断是否真的异常。',scores:{sensitivity:5,order:5,warmth:3}}
+  ]},
+  { scene:'会议 · 周一上午', text:'所有人都在赞成一个方案，但你看见了一个关键漏洞。', context:'提出异议会让会议延期，也可能让负责方案的同事难堪。', dimensions:['rebellion','warmth','order'], options:[
+    {title:'当场把问题说清楚',detail:'尴尬可以处理，错误进入执行会更贵。',scores:{rebellion:5,order:5,warmth:2}},
+    {title:'先问一个问题',detail:'让大家自己看见漏洞，而不是直接否定。',scores:{rebellion:4,warmth:5,order:4}},
+    {title:'会后单独沟通',detail:'保留对方体面，再一起准备修正版。',scores:{warmth:5,order:4,rebellion:3}},
+    {title:'先跟随多数',detail:'信息也许不完整，执行中再调整。',scores:{rebellion:1,order:2,warmth:3}}
+  ]},
+  { scene:'旅行 · 暴雨中的陌生城', text:'导航失灵，你错过末班车，离住处还有七公里。', context:'手机电量只够二十分钟，街边只有一家仍亮着灯的小店。', dimensions:['imagination','order','warmth'], options:[
+    {title:'进店向人求助',detail:'真实的人往往比失灵的地图更可靠。',scores:{warmth:5,imagination:3,order:3}},
+    {title:'立刻保存电量',detail:'确认方位、交通与备用路线后再动。',scores:{order:5,imagination:2,warmth:2}},
+    {title:'沿着灯光步行',detail:'接受这段意外，把城市重新走一遍。',scores:{imagination:5,rebellion:4,order:1}},
+    {title:'留在原地等待',detail:'避免把一个问题变成更多未知风险。',scores:{order:4,imagination:1,solitude:3}}
+  ]},
+  { scene:'家庭 · 节日餐桌', text:'亲戚再次追问你什么时候结婚、买房或“稳定下来”。', context:'家人示意你别破坏气氛，但这已经不是第一次。', dimensions:['rebellion','warmth','sensitivity'], options:[
+    {title:'认真说明自己的选择',detail:'不攻击任何人，但也不再模糊回答。',scores:{rebellion:5,warmth:4,sensitivity:3}},
+    {title:'用玩笑带过去',detail:'让饭局继续，不把自己交给争论。',scores:{warmth:4,rebellion:3,sensitivity:2}},
+    {title:'反问对方的近况',detail:'把审视重新送回提出问题的人。',scores:{rebellion:5,imagination:4,warmth:2}},
+    {title:'保持沉默',detail:'知道解释不会改变什么，先保护能量。',scores:{solitude:5,sensitivity:4,rebellion:2}}
+  ]},
+  { scene:'协作 · 截止日前', text:'团队文件版本四散，两个人还在重复做同一部分。', context:'项目仍在推进，但每多过一小时，返工风险都在增加。', dimensions:['order','warmth','rebellion'], options:[
+    {title:'暂停十分钟重建规则',detail:'统一命名、负责人和最终版本入口。',scores:{order:5,rebellion:4,warmth:3}},
+    {title:'自己默默整理',detail:'不打断别人，先把混乱接到自己手里。',scores:{order:5,warmth:4,solitude:4}},
+    {title:'先把内容做完',detail:'结构问题可以之后处理，结果优先。',scores:{order:2,rebellion:2,imagination:3}},
+    {title:'召集大家重新分工',detail:'比起文件，更需要先解决协作关系。',scores:{warmth:5,order:4,rebellion:4}}
+  ]},
+  { scene:'关系 · 沉默的第三天', text:'一次争执后，对方照常生活，却始终没有谈那件事。', context:'你们仍会分享食物和日常消息，像什么都没有发生。', dimensions:['warmth','sensitivity','rebellion'], options:[
+    {title:'主动约一次谈话',detail:'关系可以笨拙，但问题需要一个名字。',scores:{warmth:5,rebellion:4,order:4}},
+    {title:'先接受这种和解',detail:'有些人在行动里道歉，不擅长说出口。',scores:{warmth:5,sensitivity:4,rebellion:2}},
+    {title:'等对方先开口',detail:'修复不能永远由同一个人负责。',scores:{rebellion:4,solitude:4,warmth:2}},
+    {title:'把感受写下来',detail:'先弄清自己受伤的究竟是哪一部分。',scores:{sensitivity:5,solitude:5,order:3}}
+  ]},
+  { scene:'周末 · 空白的一天', text:'难得没有安排，也没有任何人约你。', context:'窗外天气很好，手机里同时躺着几条活动邀请。', dimensions:['solitude','imagination','warmth'], options:[
+    {title:'关掉手机独处',detail:'让没有用途的时间完整属于自己。',scores:{solitude:5,sensitivity:4,order:2}},
+    {title:'临时坐车去陌生地方',detail:'不做攻略，让偶然决定今天的故事。',scores:{imagination:5,rebellion:4,order:1}},
+    {title:'约一个很久没见的人',detail:'空白最适合修复一段被搁置的关系。',scores:{warmth:5,sensitivity:4,solitude:2}},
+    {title:'整理房间和下周计划',detail:'让秩序把漂浮的心重新接住。',scores:{order:5,solitude:4,imagination:2}}
+  ]},
+  { scene:'聚餐 · 六个人', text:'有人讲了一个针对弱者的刻薄玩笑，桌上其他人都笑了。', context:'讲笑话的人是今晚的主人，也是你工作上需要合作的对象。', dimensions:['rebellion','warmth','order'], options:[
+    {title:'直接说不好笑',detail:'关系成本不该由被冒犯的人独自承担。',scores:{rebellion:5,warmth:4,order:2}},
+    {title:'把话题转开',detail:'先终止继续伤害，再找合适时机沟通。',scores:{warmth:5,order:4,rebellion:3}},
+    {title:'私下提醒主人',detail:'保留合作空间，也明确自己的立场。',scores:{order:5,warmth:4,rebellion:4}},
+    {title:'不跟着笑',detail:'用沉默退出，但不把现场变成冲突。',scores:{solitude:4,rebellion:3,warmth:2}}
+  ]},
+  { scene:'旧物 · 搬家前夜', text:'你翻到一叠来自旧朋友的信，彼此已经多年不再联系。', context:'箱子已经装满，明早搬家公司就会来。', dimensions:['sensitivity','solitude','imagination'], options:[
+    {title:'全部带走',detail:'有些过去不需要有用，也值得被保存。',scores:{sensitivity:5,solitude:4,order:2}},
+    {title:'读完后只留一封',detail:'记忆需要入口，不必保留全部重量。',scores:{sensitivity:4,order:5,solitude:4}},
+    {title:'拍照然后丢掉',detail:'保留内容，把空间交还给新生活。',scores:{order:5,sensitivity:3,imagination:3}},
+    {title:'写一封新的信',detail:'不一定寄出，只让旧故事得到续页。',scores:{imagination:5,sensitivity:5,warmth:4}}
+  ]},
+  { scene:'城市 · 一张单程票', text:'你得到去另一座城市生活一年的机会。', context:'那里没有熟人，机会也并不保证一年后仍然存在。', dimensions:['imagination','rebellion','solitude'], options:[
+    {title:'立刻出发',detail:'确定性太少，正好逼自己长出新生活。',scores:{imagination:5,rebellion:5,order:1}},
+    {title:'先做完整预算',detail:'自由需要存款、退路和明确时间表。',scores:{order:5,imagination:4,rebellion:3}},
+    {title:'和重要的人讨论',detail:'选择属于自己，但不想假装毫无牵挂。',scores:{warmth:5,sensitivity:4,imagination:3}},
+    {title:'放弃机会',detail:'现在更想深耕已经建立的生活。',scores:{order:5,solitude:3,rebellion:1}}
+  ]},
+  { scene:'社交 · 行业酒会', text:'你独自来到一场几乎没有熟人的大型聚会。', context:'这是认识关键人物的好机会，但喧闹已经让你有些疲惫。', dimensions:['solitude','warmth','order'], options:[
+    {title:'只认识一个真正有趣的人',detail:'深度连接比收集更多联系方式重要。',scores:{solitude:4,warmth:5,sensitivity:4}},
+    {title:'设定三个人的目标',detail:'完成后就允许自己体面离开。',scores:{order:5,warmth:3,solitude:3}},
+    {title:'躲到角落观察',detail:'先看清人群里的关系和气氛。',scores:{solitude:5,sensitivity:5,imagination:4}},
+    {title:'主动加入最热闹的一桌',detail:'让能量带着自己进入现场。',scores:{warmth:5,rebellion:3,solitude:1}}
+  ]},
+  { scene:'舞台 · 一次公开失误', text:'你准备很久的分享中途卡住，台下有人开始看手机。', context:'还有十分钟，你可以继续、缩短或临时改变讲法。', dimensions:['order','rebellion','sensitivity'], options:[
+    {title:'承认紧张，重新开始',detail:'把失误放到台面上，现场反而会回来。',scores:{rebellion:5,warmth:4,sensitivity:4}},
+    {title:'跳到最核心结论',detail:'舍弃完整，把剩余时间交给价值。',scores:{order:5,rebellion:4,imagination:3}},
+    {title:'临时讲一个故事',detail:'先重新建立注意力，再回到原内容。',scores:{imagination:5,warmth:5,order:2}},
+    {title:'按原稿继续',detail:'相信准备好的结构能带自己走完。',scores:{order:5,solitude:4,sensitivity:2}}
+  ]},
+  { scene:'友谊 · 一次借钱请求', text:'一位关系很好的朋友突然向你借一笔不小的钱。', context:'对方说不方便解释原因，并承诺两个月后归还。', dimensions:['warmth','order','sensitivity'], options:[
+    {title:'先了解发生了什么',detail:'帮助之前，需要知道这笔钱会把人带向哪里。',scores:{warmth:5,order:5,sensitivity:4}},
+    {title:'只借能承受失去的数额',detail:'把它当作帮助，而不是押注承诺。',scores:{order:5,warmth:4,rebellion:3}},
+    {title:'直接转账',detail:'重要关系的危急时刻，不该先被审问。',scores:{warmth:5,sensitivity:4,order:1}},
+    {title:'拒绝借钱，提供其他帮助',detail:'边界清楚，关系才不必承担隐性债务。',scores:{rebellion:4,order:5,warmth:3}}
+  ]},
+  { scene:'评价 · 一封尖锐邮件', text:'你收到一封对自己作品的长篇批评，其中有些话很不客气。', context:'对方专业能力很强，也确实指出了一个你一直回避的问题。', dimensions:['sensitivity','rebellion','order'], options:[
+    {title:'先放一晚再回复',detail:'等情绪退潮，再决定哪些意见值得留下。',scores:{sensitivity:5,order:5,rebellion:3}},
+    {title:'立即为自己辩护',detail:'表达方式越界，就不能只讨论内容。',scores:{rebellion:5,sensitivity:4,order:2}},
+    {title:'只提取有效部分',detail:'不让语气决定信息本身的价值。',scores:{order:5,solitude:4,sensitivity:2}},
+    {title:'约对方面谈',detail:'文字把人推远，真实对话也许能修复误解。',scores:{warmth:5,rebellion:4,sensitivity:4}}
+  ]},
+  { scene:'金钱 · 意外到账', text:'你突然得到一笔足以覆盖半年生活费的奖金。', context:'没有必须偿还的债务，也没有迫在眉睫的大额支出。', dimensions:['order','imagination','warmth'], options:[
+    {title:'大部分存起来',detail:'自由首先来自不必恐慌的安全垫。',scores:{order:5,imagination:2,rebellion:2}},
+    {title:'开启一个长期项目',detail:'把钱换成一段真正属于自己的时间。',scores:{imagination:5,order:4,solitude:4}},
+    {title:'带重要的人去旅行',detail:'钱最好的形状，是共同拥有的记忆。',scores:{warmth:5,imagination:5,order:2}},
+    {title:'立刻离开不喜欢的工作',detail:'它买到的不是物品，而是一次拒绝的权利。',scores:{rebellion:5,imagination:4,order:1}}
+  ]},
+  { scene:'书店 · 偶然翻页', text:'你读到一句无法完全理解、却让你停住很久的话。', context:'书很厚、价格不低，而你本来只想买一本实用类读物。', dimensions:['imagination','sensitivity','order'], options:[
+    {title:'买下这本书',detail:'被击中的瞬间，本身就是一种理解。',scores:{imagination:5,sensitivity:5,order:2}},
+    {title:'拍下那一页',detail:'先保存入口，等真正需要时再回来。',scores:{order:4,sensitivity:4,imagination:3}},
+    {title:'站着继续读十分钟',detail:'验证吸引来自内容，还是来自偶然气氛。',scores:{order:5,imagination:4,sensitivity:3}},
+    {title:'仍买原计划的书',detail:'美可以经过，但今天的问题需要答案。',scores:{order:5,imagination:1,sensitivity:2}}
+  ]},
+  { scene:'停电 · 夏夜 21:16', text:'整片街区突然停电，预计三个小时后恢复。', context:'工作被迫中断，手机信号很弱，窗外有人搬出椅子聊天。', dimensions:['solitude','warmth','imagination'], options:[
+    {title:'下楼加入邻居',detail:'一次故障也许是认识身边人的入口。',scores:{warmth:5,imagination:3,solitude:1}},
+    {title:'点蜡烛独自坐着',detail:'让黑暗把被屏幕占满的感官还回来。',scores:{solitude:5,sensitivity:5,imagination:4}},
+    {title:'继续想办法工作',detail:'环境改变，承诺和节奏不必一起失效。',scores:{order:5,rebellion:3,solitude:3}},
+    {title:'出门随便走走',detail:'没有导航和目的地，城市会变成另一座城市。',scores:{imagination:5,rebellion:4,order:1}}
+  ]},
 ];
 
 const authors: Author[] = [
@@ -124,12 +220,15 @@ const literaryPaths: Record<string, LiteraryPath> = {
   '卡尔维诺': { book:'《看不见的城市》', figure:'马可·波罗', road:'你正在给一个沉重复杂的问题寻找轻盈结构。你有能力构造许多可能世界，但最终仍要从地图走回生活。', proof:'马可·波罗用一座座城市描述欲望、记忆、死亡和关系，每个模型都照见现实的一面。作品替你验证过：换一种结构能让困境重新可见，但模型的价值在于帮助选择，而不是替代进入。', answer:'先设计一个足够轻的实验，让想象接受现实反馈。好的框架不是完美解释世界，而是让你愿意开始。', route:['把问题画成三个可调整的变量','设计一个七天内能完成的小实验','依据真实反馈保留、修改或放弃框架'], readingNote:'每次只读一两座城市，并写下它对应你现实里的什么；让寓言成为工具，不只是收藏。' },
 };
 
-const scale = [1, 2, 3, 4, 5];
-
 function calculateScores(answers: number[]): Scores {
   const totals: Record<Trait, number[]> = { imagination:[], sensitivity:[], rebellion:[], warmth:[], solitude:[], order:[] };
-  questions.forEach((question, index) => totals[question.trait].push(answers[index] || 3));
-  return Object.fromEntries(Object.entries(totals).map(([trait, values]) => [trait, values.reduce((a,b)=>a+b,0) / values.length])) as Scores;
+  questions.forEach((question, index) => {
+    const chosen = answers[index];
+    if (!chosen) return;
+    const option = question.options[chosen - 1];
+    (Object.entries(option.scores) as [Trait, number][]).forEach(([trait,value]) => totals[trait].push(value));
+  });
+  return Object.fromEntries(Object.entries(totals).map(([trait, values]) => [trait, values.length ? values.reduce((a,b)=>a+b,0) / values.length : 3])) as Scores;
 }
 
 function distance(scores: Scores, author: Author) {
@@ -176,26 +275,27 @@ export default function Home() {
     <main className={`site ${stage}`}>
       <header className="masthead">
         <button className="wordmark" onClick={restart} aria-label="返回测试首页"><span>底</span><b>人格底色</b></button>
-        <div className="edition"><span>LITERARY TEMPERAMENT ARCHIVE</span><span>第二版 · 24 位文学原型</span></div>
+        <div className="mast-nav" aria-label="内容索引"><span>测试介绍</span><span>24 种作家人格</span><span>书中来信</span></div>
+        <div className="edition"><span>PRIVATE LITERARY ARCHIVE</span><span>NO. 2026—024</span></div>
       </header>
 
       {stage === 'intro' && (
         <section className="landing" aria-labelledby="main-title">
           <div className="landing-copy">
-            <div className="issue-line"><span>NO. 024</span><i /><span>一份关于你内在叙事的私人档案</span></div>
-            <h1 id="main-title"><small>如果你的灵魂</small><em>是一本文学作品</em><strong>谁会写下它？</strong></h1>
-            <p className="intro-text">18 个具体的生活片段，六种精神刻度。我们将从 24 位中外文学家的作品气质中，找到与你此刻最接近的那一种人格底色。</p>
-            <p className="promise-note"><span>本次阅读的答案</span><strong>你走的这条路，书里已经有人替你走过。</strong>不是一句空泛安慰，而是一段经过人物命运验证的经验。</p>
+            <div className="issue-line"><span>LITERARY PERSONALITY TEST</span><i /><span>18 个场景 · 24 种作家人格</span></div>
+            <h1 id="main-title"><small>你的私人文学档案</small><em>你走的这条路，</em><strong>书里已经有人替你走过。</strong></h1>
+            <p className="intro-text">18 个多场景选择，不问你“像不像”，只看你会怎么做。我们从六种精神维度，为你找到一位文字同行人，以及一本已经替你验证过这段人生的书。</p>
+            <p className="promise-note"><span>你会得到</span><strong>一种人格底色 · 一本命运之书 · 三步现实路径</strong>不是把你归类，而是从文学里借回一段已经被走过的经验。</p>
             <div className="intro-actions"><button className="ink-button" onClick={() => setStage('quiz')}>打开测试档案 <span>↗</span></button><p>约 5 分钟<br />无需登录</p></div>
           </div>
 
           <div className="archive-art" aria-hidden="true">
             <div className="poster poster-back"><span>THE<br/>INNER<br/>TEXT</span></div>
             <div className="poster poster-front">
-              <span className="poster-no">ARCHIVE / 024</span>
+              <span className="poster-no">PERSONA IN PRINT / 024</span>
               <div className="face-type">文</div>
-              <p>不是成为某位作家<br/>而是照见相似的灵魂纹理</p>
-              <b>PERSONA<br/>IN PRINT</b>
+              <p>书中来信<br/>THE BOOK HAS BEEN THERE</p>
+              <b>24<br/>LIVES</b>
             </div>
             <div className="red-thread" /><div className="stamp">私人<br/>阅读</div>
           </div>
@@ -209,16 +309,16 @@ export default function Home() {
           <aside className="quiz-aside">
             <span className="vertical-label">PERSONAL ARCHIVE</span>
             <div className="folio"><small>问题</small><strong>{String(current + 1).padStart(2,'0')}</strong><span>/ {questions.length}</span></div>
-            <div className="mini-index">{Object.entries(traits).map(([key,trait]) => <span key={key} className={questions[current].trait === key ? 'on' : ''}>{trait.name}</span>)}</div>
+            <div className="mini-index">{Object.entries(traits).map(([key,trait]) => <span key={key} className={questions[current].dimensions.includes(key as Trait) ? 'on' : ''}>{trait.name}</span>)}</div>
           </aside>
           <div className="question-panel" key={current}>
             <div className="progress"><span style={{width:`${((current+1)/questions.length)*100}%`}} /></div>
             <p className="scene">{questions[current].scene}</p>
             <h2>{questions[current].text}</h2>
-            <p className="instruction">哪一端更接近你当时最自然的反应？</p>
-            <div className="pole-labels"><span>{questions[current].low}</span><i/><span>{questions[current].high}</span></div>
-            <div className="literary-scale">
-              {scale.map(value => <button key={value} className={answers[current] === value ? 'selected' : ''} onClick={() => choose(value)} aria-label={`选择程度 ${value}`}><span>{value}</span><small>{value===1?'更靠左':value===3?'介于两者':value===5?'更靠右':''}</small></button>)}
+            <p className="scenario-context">{questions[current].context}</p>
+            <p className="instruction">如果是你，此刻最可能怎么做？请选择第一反应。</p>
+            <div className="scenario-options">
+              {questions[current].options.map((option,index) => <button key={option.title} className={answers[current] === index + 1 ? 'selected' : ''} onClick={() => choose(index + 1)}><span>{String.fromCharCode(65+index)}</span><div><strong>{option.title}</strong><small>{option.detail}</small></div><i>↗</i></button>)}
             </div>
             <div className="question-foot"><button disabled={current===0} onClick={()=>setCurrent(current-1)}>← 回看上一页</button><span>已留下 {answered} / {questions.length} 个回答</span></div>
           </div>
