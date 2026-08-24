@@ -258,6 +258,33 @@ const literaryPaths: Record<string, LiteraryPath> = {
 
 const traitOrder: Trait[] = ['imagination','sensitivity','rebellion','warmth','solitude','order'];
 
+const authorLives: Record<string,string> = {
+  '鲁迅':'鲁迅早年赴日本学医，后来意识到仅治疗身体不足以改变人的处境，转而以文学唤醒精神。此后他在教育、写作与公共论争之间辗转，长期面对时代动荡、现实压迫和误解，却始终坚持揭露麻木，也始终没有放弃“人可以改变”的希望。',
+  '张爱玲':'张爱玲在上海与香港的战争经验、复杂家庭和亲密关系中，很早看见了繁华背后的脆弱。她成名很早，后来远赴美国，在远离聚光灯的生活中继续写作；她的一生证明，清醒能保护一个人，但真正的主动来自看清现实后仍作出选择。',
+  '汪曾祺':'汪曾祺求学于战火中的西南联大，师从沈从文，后来经历工作变动与漫长的时代沉浮。无论处境怎样变化，他都把注意力重新放回食物、草木、手艺和普通人的尊严；他用一生证明，日常感受力不是逃避，而是一种稳定的复原能力。',
+  '沈从文':'沈从文从湘西行伍生活走到北京，靠自学和写作进入文学世界。时代转折后，他一度停止文学创作，转而长期研究中国古代服饰与物质文化；他的一生说明，一个人的表达方式可以改变，但对土地、记忆与人的关注仍能以新的形式延续。',
+  '三毛':'三毛长期在不同城市和文化之间生活，并在撒哈拉与荷西共同建立过真实而琐碎的日常。经历伴侣离世后，她仍继续旅行、演讲与写作；她的一生提醒人们，远方可以打开生命，却无法替代安顿、关系和持续生活的能力。',
+  '苏轼':'苏轼在仕途上多次起落，被贬至黄州、惠州与儋州等地。职位、名望和生活条件不断变化，他仍通过写作、饮食、交友、劳动与山水重建生活；他的一生证明，旷达不是没有痛苦，而是在失去之后继续组织可活的日常。',
+  '海明威':'海明威经历战争、受伤、记者工作和长期迁徙，并把这些经验转化为克制、精确的写作。他推崇勇气、技术与行动，也长期承受身体和精神健康问题；他的一生既证明了纪律的力量，也提醒人们，坚强如果拒绝求助，最终会变成新的负担。',
+  '卡夫卡':'卡夫卡白天在保险机构工作，夜晚写作，长期在家庭责任、职业义务和创作需要之间拉扯。他生前只有少量作品得到关注，健康也不断恶化；他的一生证明，外部认可可能迟到，但持续为无法言说的经验寻找形式，本身就有价值。',
+  '伍尔夫':'伍尔夫在布鲁姆斯伯里文化圈中成长，与丈夫伦纳德共同创办霍加斯出版社，同时不断尝试新的小说形式。她长期与精神疾病反复相处，却仍持续讨论女性的经济独立、创作空间与内部生命；她的一生说明，才华需要空间，也需要支持系统。',
+  '简·奥斯汀':'奥斯汀大部分时间生活在家庭与乡村社交的有限范围中，作品最初多以匿名方式出版。她没有依靠宏大经历，而是长期观察婚姻、金钱、礼貌和判断偏差；她的一生证明，范围有限不等于视野狭窄，准确观察同样能建立辽阔作品。',
+  '艾米莉·狄金森':'狄金森一生大多生活在马萨诸塞州阿默斯特，与外界保持有限而选择性的联系，却写下近两千首诗。她生前只有少量作品发表；她的一生证明，内部世界可以极其辽阔，同时也提醒人们，作品若想抵达他人，仍需要一道被打开的出口。',
+  '加缪':'加缪出生于阿尔及利亚的贫困家庭，做过记者、编辑和抵抗运动报刊工作，并在战争与政治冲突中形成关于荒诞、反抗和责任的思想。他很早获得世界声誉，却始终拒绝简单站队；他的一生证明，没有终极答案时，人仍能以具体原则承担选择。',
+  '博尔赫斯':'博尔赫斯在布宜诺斯艾利斯、欧洲与图书馆之间形成自己的精神地图，晚年视力逐渐丧失，却仍通过口述持续写作和讲学。他把个人限制转化为关于迷宫、记忆与无限的作品；他的一生证明，失去一种观看方式后，人仍可以重建理解世界的方法。',
+  '马尔克斯':'马尔克斯童年由外祖父母抚养，家族传说、战争记忆与加勒比文化成为他一生的叙事源头。他从记者工作起步，经历迁徙、审查与经济压力，最终用马孔多让私人记忆进入世界文学；他的一生证明，理解来处，才能改写反复出现的历史。',
+  '托尔斯泰':'托尔斯泰从贵族青年、军人和著名小说家，走向长期的精神危机与道德实践。他不断质疑财富、制度、家庭责任和自己的生活是否一致；他的一生证明，价值观真正困难的部分不是想明白，而是如何在日常关系与行动中承担它。',
+  '陀思妥耶夫斯基':'陀思妥耶夫斯基经历逮捕、模拟处决、西伯利亚流放、债务、赌博与疾病，也一次次重新开始写作。极端经历让他持续追问罪责、自由、信仰和救赎；他的一生证明，痛苦可以成为理解材料，但真正的转变仍要通过关系、责任与行动发生。',
+  '莎士比亚':'莎士比亚从斯特拉特福进入伦敦剧场，既是演员、编剧，也是剧团股东，在商业舞台上持续写作。关于他的私人生活留下的资料有限，但作品容纳了不同阶层、欲望与立场；他的职业一生证明，理解复杂人性与作出舞台选择可以同时发生。',
+  '王尔德':'王尔德以才华、机智和鲜明风格进入伦敦社会顶层，后来因审判和入狱迅速失去名望、自由与原有生活，晚年流亡欧洲。他的一生把形象、欲望与现实代价同时展现出来：风格可以争取自由，却不能替人承担选择的后果。',
+  '泰戈尔':'泰戈尔在孟加拉的文化传统、教育实践与世界旅行之间生活，创办学校，并长期思考殖民、民族主义与人的普遍连接。他既写诗歌，也把理念变成教育和社会行动；他的一生证明，温柔并非抽象态度，它需要制度、劳动和清楚边界来承载。',
+  '玛格丽特·杜拉斯':'杜拉斯的童年发生在法属印度支那，贫困、殖民环境与家庭关系后来反复进入她的小说和电影。她参与过抵抗运动，也不断重写个人记忆；她的一生证明，同一段经验可以被重新理解，但强烈记忆不必永远成为现实生活的指令。',
+  '普鲁斯特':'普鲁斯特早年进入巴黎社交世界，长期受健康问题影响，后来逐渐退回相对封闭的生活，集中完成关于时间与记忆的巨著。他把失去的人、关系和时代转化为作品；他的一生证明，回忆的出口不是复原过去，而是给过去一种新的形式。',
+  '赫尔曼·黑塞':'黑塞年轻时曾反抗学校与家庭安排，做过书店学徒，也经历婚姻、战争时代与精神危机。他通过心理分析、绘画和写作不断整合东西方思想及内部矛盾；他的一生证明，寻找自我不是不停更换身份，而是逐渐接纳并组织已经经历过的自己。',
+  '川端康成':'川端康成幼年接连失去亲人，孤独与消逝感长期进入他的创作。他在日本现代化过程中持续连接传统审美与现代小说，并获得国际声誉；他的一生说明，对短暂之美的敏感能够成为作品，但真实关系仍需要超越凝视、进入承担。',
+  '卡尔维诺':'卡尔维诺青年时期参加反法西斯游击队，战后进入出版界工作，创作从现实主义逐渐走向寓言、幻想与精密结构。后来他在意大利与巴黎知识界之间持续实验形式；他的一生证明，轻盈不是回避现实，而是为沉重问题寻找更能行动的结构。'
+};
+
 const traitReports: Record<Trait, { high:string; mid:string; low:string; strength:string; risk:string; action:string; environment:string }> = {
   imagination: {
     high:'你习惯从多个角度理解问题，也愿意尝试尚未被证明的新方法。',
@@ -300,6 +327,39 @@ const traitReports: Record<Trait, { high:string; mid:string; low:string; strengt
     low:'你更依赖兴趣和情境启动，固定流程过多会削弱你的活力。',
     strength:'能把想法转成进度，让复杂任务持续向前。', risk:'可能为了可控而过度准备，错过试错和变化窗口。',
     action:'为当前目标只保留三个里程碑，每周根据反馈更新一次。', environment:'目标清晰、权责明确，同时允许优化方法的工作。'
+  }
+};
+
+const futureSignals: Record<Trait,{ opportunity:string; encounter:string; direction:string }> = {
+  imagination:{
+    opportunity:'你可能遇到需要从零构思、重新定义问题或跨领域连接的机会。别人看见限制时，你往往能先看见替代路线。',
+    encounter:'未来较常见的困难不是没有想法，而是机会同时出现、目标频繁切换，最后没有一条路得到现实验证。',
+    direction:'把创造力放进一个明确主题，连续完成三个小作品或三轮实验，建立“想象—交付—反馈”的闭环。'
+  },
+  sensitivity:{
+    opportunity:'你可能在内容、审美、关系维护或用户体验中，率先察觉别人尚未说出口的变化。',
+    encounter:'你也可能遇到信息过载、过度解读回应，或因为害怕负面反馈而反复修改自己的情况。',
+    direction:'练习区分事实、解释与感受；保留敏锐，但不要让每一个外界信号都拥有决定权。'
+  },
+  rebellion:{
+    opportunity:'你可能被推到需要提出异议、修正规则或带领变化的位置，并因此建立鲜明的专业立场。',
+    encounter:'未来的冲突常来自“观点有价值，但表达方式让人先进入防御”，也可能因过早对抗而失去资源。',
+    direction:'形成“证据—影响—替代方案”的表达习惯，让独立判断不仅被看见，也真正推动事情改变。'
+  },
+  warmth:{
+    opportunity:'你可能因为建立信任、理解差异和促成合作，成为团队或关系中的关键连接者。',
+    encounter:'未来需要警惕长期替别人兜底、害怕让人失望，最后用疲惫或突然退出表达边界。',
+    direction:'把关怀升级为有边界的协作：先确认责任、时间与回报，再决定投入到什么程度。'
+  },
+  solitude:{
+    opportunity:'你可能在需要深度研究、独立创作和长期积累的方向形成不容易被替代的成果。',
+    encounter:'压力增加时，你可能减少解释与反馈，让他人无法判断你的进度，也让小问题在内部被放大。',
+    direction:'同时保留深度工作与固定反馈节点；独处用来形成成果，而不是无限推迟与现实接触。'
+  },
+  order:{
+    opportunity:'你可能接手更复杂、周期更长的任务，并凭借拆解、推进和兑现承诺获得信任。',
+    encounter:'未来可能出现计划赶不上变化、控制感下降，或因为准备过多而错过行动窗口的阶段。',
+    direction:'从追求完整计划转向管理关键节点：明确最低完成标准，并为变化预留调整空间。'
   }
 };
 
@@ -507,18 +567,19 @@ export default function Home() {
           </section>
 
           <section className="book-evidence" aria-labelledby="book-title">
-            <header><div><span>04 / THE BOOK HAS BEEN THERE</span><h2 id="book-title">你走的这条路，<br/>这本书里有人验证过。</h2></div><div className="book-ticket"><small>建议阅读</small><b>{path.book}</b><span>{path.figure}</span></div></header>
-            <div><article><b>你正在处理的问题</b><p>{path.road}</p></article><article className="dark"><b>书中人物付过的代价</b><p>{path.proof}</p></article><article className="accent"><b>可以带回现实的结论</b><p>{path.answer}</p></article></div>
+            <header><div><span>04 / A LIFE HAS BEEN THERE</span><h2 id="book-title">你走的这条路，<br/>{result.name}用一生验证过。</h2><p className="life-deck">不只看一本书的结局，也看这位作家怎样生活、失去、改变，并把答案写进作品。</p></div><div className="book-ticket"><small>从这里开始阅读</small><b>{path.book}</b><span>{path.figure}</span></div></header>
+            <div><article className="life-story"><b>{result.name}的一生</b><p>{authorLives[result.name]}</p></article><article className="dark"><b>这一生如何进入作品</b><p>{path.proof}</p></article><article className="accent"><b>你可以带走的答案</b><p>{path.answer}</p></article></div>
             <aside><b>阅读时重点看：</b><p>{path.readingNote}</p></aside>
           </section>
 
           <section className="growth-plan" aria-labelledby="growth-title">
-            <header className="section-head"><div><span>05 / 90-DAY DIRECTION</span><h2 id="growth-title">未来三个月发展方向</h2></div><p>一次只练习一种新行为，用真实反馈代替对自己的抽象评价。</p></header>
+            <header className="section-head"><div><span>05 / YOUR NEXT CHAPTER</span><h2 id="growth-title">你的发展方向<br/>与未来可能遇到的课题</h2></div><p>这不是对未来的预测，而是根据你的优势组合，提示更可能出现的机会、冲突与成长任务。</p></header>
             <ol>
-              <li><span>01</span><div><b>第 1—30 天 · 看见模式</b><p>{path.route[0]}。每周记录一次发生的场景、你的第一反应和实际结果。</p></div></li>
-              <li><span>02</span><div><b>第 31—60 天 · 使用优势</b><p>{traitReports[strongest].action} 完成后只复盘方法，不用一次结果评价整个人。</p></div></li>
-              <li><span>03</span><div><b>第 61—90 天 · 补足短板</b><p>{traitReports[growth].action} 连续实践四周，并请一位可信任的人提供一次具体反馈。</p></div></li>
+              <li className="future-opportunity"><span>01</span><div><b>你更可能遇到的机会</b><p>{futureSignals[strongest].opportunity}</p></div></li>
+              <li className="future-challenge"><span>02</span><div><b>反复出现的冲突</b><p>{futureSignals[second].encounter}</p></div></li>
+              <li className="future-direction"><span>03</span><div><b>最值得投入的发展方向</b><p>{futureSignals[growth].direction}</p></div></li>
             </ol>
+            <aside className="development-note"><b>从现在开始的一步</b><p>{path.route[0]}。{result.practice}</p></aside>
           </section>
 
           <div className="echoes"><div><span>另外两种相近底色</span><p>你的结果不是单一标签，也会与这些作家原型产生部分共鸣。</p></div><div className="echo-cards">{matches.slice(1).map((author,index)=><article key={author.name}><span>0{index+2}</span><div><small>{author.en}</small><h3>{author.name}</h3><p>{author.archetype}</p></div><strong>{resonance(author)}%</strong></article>)}</div></div>
